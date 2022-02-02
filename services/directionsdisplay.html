@@ -6,7 +6,6 @@
   <head>
     <title>Simple Map</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<!--     <script src="mydirections.js"> </script>     -->
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -331,15 +330,12 @@
    ],
    "status" : "OK"
 }
-      }
     </script>
   </head>
-  <body>
-    <div id="map"></div>
-    
+  <body>    
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <!-- *** STUDENTS: Replace YOUR_API_KEY text with provided key in class for property src in next line *** -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv3MGflguusDaLmV_-BUlmuoUI4EbM88w&callback=initMap&v=weekly" async>
+    <script src="https://maps.googleapis.com/maps/api/directions/json?destination=place_id:ChIJibej8LwZyUwRHXpuPFUdcoo&origin=place_id:ChIJq6rqJ_MZyUwRmflwvjItp3E&waypoints=place_id:ChIJKV2i15IZyUwRt4UqnIe-V4E&arrival_time=2016-06-06T12:30:00&mode=walking&language=fr-CA&key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly" async> 
     </script>
   </body>
 </html>

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <!-- source: https://developers.google.com/maps/documentation/javascript/overview#maps_map_simple-html -->
-<!-- STUDENTS: Modify this file to provided the Google API key to get it working, 
-               then modify the lat and lng and zoom to point to a place you know  -->
+
+<!-- last modified 30 Jan 2022 by L. Aldous -->
+<!-- initial template from Simple Map checklist component -->
+
 <html>
   <head>
-    <title>Simple Map</title>
+    <title>Record-Breaking Career Path of Edwin Jackson</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
         #map {
-          height: 100%;
+          height: 90%;  /* was originally 100% */
         }
 
         /* Optional: Makes the sample page fill the window. */
@@ -20,24 +22,150 @@
           margin: 0;
           padding: 0;
         }
+
+        #titleBlock {
+          font-family: Arial;
+          color: #002D72;
+          margin: 24px;
+        }
+
+        h1 {
+          font-size: 28px;
+        }
+
+        p {
+          font-size: 14px;
+        }
+
     </style>
+
     <script>
       let map;
 
+      // List of team locations 
       function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 44.723503, lng: -80.029690 },
-          zoom: 11,
+        const MapCentre = { lat: 34.723503, lng: -96.029690 };
+        const LosAngeles = { lat: 34.0522, lng: -118.2437 };
+        const Tampa = { lat: 27.9506, lng: -82.4572 };
+        const Detroit = { lat: 42.3314, lng: -83.0458 };
+        const Arizona = { lat: 33.4484, lng: -112.0740 };
+        const Chicago1 = { lat: 41.829889, lng: -87.633777 };
+        const Chicago2 = { lat: 41.948412, lng: -87.655345 };
+        const StLouis = { lat: 38.6270, lng: -90.1994 };
+        const Atlanta = { lat: 33.7490, lng: -84.3880 };
+        const Miami = { lat: 25.7617, lng: -80.1918 };
+        const SanDiego = { lat: 32.7157, lng: -117.1611 };
+        const Baltimore = { lat: 39.2904, lng: -76.6122 };
+        const Washington = { lat: 38.9072, lng: -77.0369 };
+        const Oakland = { lat: 37.8044, lng: -122.2712 };
+        const Toronto = { lat: 43.6532, lng: -79.3832 };
+
+        // Adding the arrow icon to the end of the polyline
+        //https://developers.google.com/maps/documentation/javascript/examples/overlay-symbol-arrow#maps_overlay_symbol_arrow-javascript
+        const lineSymbol = {
+          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+          scale: 2,
+        };
+
+        // Swapped map to be within const to make markers easier (I think?)
+        const map = new google.maps.Map(
+          document.getElementById("map"), {
+            center: MapCentre,
+            zoom: 4,  // or 5? depends on size of screen?
+            mapId: "roadmap",
+          }
+        );
+
+        // Order of team locations for career path
+        const teamLocations = [
+          LosAngeles, Tampa, Detroit, Arizona, Chicago1, StLouis, Washington, 
+          Chicago2, Atlanta, Miami, SanDiego, Baltimore, Washington,  Oakland, 
+          Toronto,
+        ];
+
+        // // seperate constant to make the info windows play nice
+        const teamLabels = [
+          [LosAngeles, "<b>Los Angeles Angels:</b> 2003 - 2005"],       // may need to move <b> to CSS
+          [Tampa, "Tampa Bay Rays: 2006 - 2008"], 
+          [Detroit, "Detroit Tigers: ___"],
+          [Arizona, "___"], 
+          [Chicago1, "Chicago White Sox __"],
+          [StLouis, "__"],
+          [Washington, "__"],
+          [Chicago2, "Chicago Cubs: ___"],
+          [Atlanta, "__"],
+          [Miami, "__"],
+          [SanDiego, "__"],
+          [Baltimore, "__"],
+          [Oakland, "__"],
+          [Toronto, "__"],
+          ];
+
+        // "Create an info window to share between markers."
+        // https://developers.google.com/maps/documentation/javascript/examples/marker-accessibility
+        // const infoWindow = new google.maps.InfoWindow();
+
+        // Creating the markers for each point (might need to watch it with this)
+        teamLabels.forEach(([position, title], i) => {
+          const marker = new google.maps.Marker({
+            position,
+            map,
+            title: `${title}`,
+            label: `${i + 1}`,
+            optimized: false, // what does this do?
+          });
         });
+
+        // marker.addListener("click", () => {
+        //   infoWindow.close();
+        //   infoWindow.setContent(marker.getTitle());
+        //   infoWindow.open(marker.getMap(), marker);
+        // });
+
+        // (attempting the path component)       
+        const careerPath = new google.maps.Polyline({
+          path: teamLocations,
+          geodesic: true,
+          strokeColor: "#D50032",
+          strokeOpacity: 0.75,
+          strokeWeight: 1,
+          icons: [
+            {
+              icon: lineSymbol,
+              offset: "100%",
+            }
+          ],
+          map: map,
+        });
+
+        careerPath.setMap(map);
+
+        // the original SimpleMap code
+        // map = new google.maps.Map(document.getElementById("map"), {
+        //   center: { lat: 37.723503, lng: -96.029690 },
+        //   zoom: 4,
+        // });
+
       }
     </script>
   </head>
   <body>
+    <div id="titleBlock"> 
+      <h1>Edwin Jackson: A Record-Breaking Career Path</h1>
+      <p> In 2019, pitcher Edwin Jackson broke a Major League Baseball record by
+        playing for 14 different teams across the league. He began his major league
+        career with the Los Angeles Dodgers in 2003 and was traded to a new team every
+        few years. In May of 2019, Jackson pitched for the Toronto Blue Jays, his 14th 
+        different club, and officially surpassed the previous record of 13 teams. This 
+        map is intended to demonstrate the path he took over the course of those 16 years
+      </p>
+    </div>   
+
     <div id="map"></div>
     
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <!-- *** STUDENTS: Replace YOUR_API_KEY text with provided key in class for property src in next line *** -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv3MGflguusDaLmV_-BUlmuoUI4EbM88w&callback=initMap&v=weekly" async>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly" async>
     </script>
   </body>
 </html>

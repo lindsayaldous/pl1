@@ -15,7 +15,7 @@ https://maps.googleapis.com/maps/api/directions/json?destination=place_id:ChIJib
 ## Next paste the full JSON response to this query here:
 
 ```
-(Please see **mydirections.js**)
+(Please see mydirections.js)
 ```
 ____
 ## Rubric
